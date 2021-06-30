@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBallTable extends Migration
+class CreateBallsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBallTable extends Migration
      */
     public function up()
     {
-        Schema::create('ball', function (Blueprint $table) {
+        Schema::create('balls', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
             $table->text('image');
