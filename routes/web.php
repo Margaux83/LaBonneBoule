@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\BallController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +20,18 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/balls', [BallController::class, 'index'])->middleware(['auth']);
+
+Route::get('/update/{ball_id}', [BallController::class, 'update'])->middleware(['auth'])->name('update_form');
+Route::post('/update', [BallController::class, 'store'])->middleware(['auth'])->name('store');
+
+Route::get('/delete/{ball_id}', [BallController::class, 'delete'])->middleware(['auth'])->name('delete');
+
+Route::get('/addballs', function () {
+    return view('addballs');
+})->middleware(['auth'])->name('addballs');
+
+Route::post('/postBall', [BallController::class, 'save'])->middleware(['auth'])->name('postBall');
 
 require __DIR__.'/auth.php';
