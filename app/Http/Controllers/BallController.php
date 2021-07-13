@@ -57,5 +57,13 @@ class BallController extends Controller
         return redirect('balls')->with('status', 'Ball updated');
     }
 
+    public function ball(Request $request){
+
+
+        $ball_id = $request->ball_id;
+        $ball = Ball::find($ball_id);
+        return view('ball',['ball'=>$ball]);
+
+    }
 
 }

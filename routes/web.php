@@ -28,6 +28,7 @@ Route::post('/update', [BallController::class, 'store'])->middleware(['auth'])->
 
 Route::get('/delete/{ball_id}', [BallController::class, 'delete'])->middleware(['auth'])->name('delete');
 
+Route::get('/ball/{ball_id}', [BallController::class, 'ball'])->middleware(['auth'])->name('ball');
 Route::get('/addballs', function () {
     return view('addballs');
 })->middleware(['auth'])->name('addballs');

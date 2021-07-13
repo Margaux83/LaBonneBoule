@@ -13,7 +13,7 @@
                     <button><a href="{{ url('/addballs') }}">Ajouter une boule de pétanque</a></button>
                     @foreach($balls as $ball)
                         <li>
-                            <a href="">
+                            <a href="/ball/{{ $ball->id }}">
                                 {{$ball->name}}
                             </a>
                             ( <a href="/delete/{{ $ball->id }}">delete</a> |
