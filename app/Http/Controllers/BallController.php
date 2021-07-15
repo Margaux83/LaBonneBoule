@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class BallController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Affichage des boules qui ne sont pas supprimées (isdeleted = 0)
+0     */
     public function index(){
         $balls = DB::table('balls')
             ->select(DB::raw('id, name'))
@@ -17,6 +21,11 @@ class BallController extends Controller
         return view('balls',['balls'=>$balls]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Ajout d'une boule dans la base de données
+     */
     public function save(Request $request)
     {
         $ball = new Ball;
@@ -27,14 +36,23 @@ class BallController extends Controller
         return redirect('/balls')->with('status', 'Message posted');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Récupération de l'id d'une boule pour sa modification
+     */
     public function update(Request $request)
     {
         $ball_id =$request->ball_id;
         $ball = Ball::find($ball_id);
         return view('updateball',['ball'=>$ball]);
-
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Suppression d'une boule (on passe le champ isdeleted à 1)
+     */
     public function delete(Request $request)
     {
         $ball_id =$request->ball_id;
@@ -42,11 +60,15 @@ class BallController extends Controller
         $ball->isdeleted = 1;
         $ball->save();
         return redirect('balls')->with('status', 'Ball deleted');
-
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * Modification des informations d'une boule
+     */
     public function store(Request $request)
     {
-
         $ball_id =$request->ball_id;
 
         $ball = Ball::find($ball_id);
@@ -57,13 +79,15 @@ class BallController extends Controller
         return redirect('balls')->with('status', 'Ball updated');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * Affichage des informations de la boule sélectionnée
+     */
     public function ball(Request $request){
-
-
         $ball_id = $request->ball_id;
         $ball = Ball::find($ball_id);
         return view('ball',['ball'=>$ball]);
-
     }
 
 }

@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/balls', [BallController::class, 'index'])->middleware(['auth']);
+Route::get('/balls', [BallController::class, 'index'])->middleware(['auth'])->name('balls');
 
 Route::get('/update/{ball_id}', [BallController::class, 'update'])->middleware(['auth'])->name('update_form');
 Route::post('/update', [BallController::class, 'store'])->middleware(['auth'])->name('store');

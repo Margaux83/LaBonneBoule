@@ -11,8 +11,8 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <p>Ajout</p>
                     {!! Form::open(['url' => 'postBall']) !!}
-                    {!! Form::text('name') !!}
-                    {!! Form::file('image') !!}
+                    {!! Form::text('name',null, ['required']) !!}
+                    {!! Form::file('image', null, array('required' => 'required')) !!}
                     {!! Form::submit('Ajouter la boule') !!}
                     {!! Form::close() !!}
                 </div>
