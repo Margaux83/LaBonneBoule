@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     You're logged in!
-                    <button><a href="{{ url('/balls') }}">Voir les boulles de pétanque</a></button>
+                    <button><a href="{{ url('/balls') }}">Voir les boules de pétanque</a></button>
                 </div>
             </div>
         </div>

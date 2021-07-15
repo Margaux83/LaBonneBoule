@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fecc408e-9d07-4c65-b506-8bae5bf4dee0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BallController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BallController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_30_145531_create_balls_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_06_30_145531_create_balls_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/addballs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/addballs.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navigation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navigation.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/ball.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/ball.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/balls.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/balls.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/updateball.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/updateball.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="feature/CRUD-balls" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

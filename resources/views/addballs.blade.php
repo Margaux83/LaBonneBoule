@@ -11,8 +11,14 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <p>Ajout</p>
                     {!! Form::open(['url' => 'postBall']) !!}
-                    {!! Form::text('name',null, ['required']) !!}
-                    {!! Form::file('image', null, array('required' => 'required')) !!}
+                    {!! Form::label('name', 'Nom :'); !!}   <br>
+                    {!! Form::text('name',null, ['required']) !!}   <br>
+                    {!! Form::label('image', 'Image :'); !!}   <br>
+                    {!! Form::file('image') !!}   <br>
+                    {!! Form::label('description', 'Description :'); !!}   <br>
+                    {!! Form::text('description',null) !!}   <br>
+                    {!! Form::label('price', 'Prix :'); !!}   <br>
+                    {!! Form::number('price',null, ['required']) !!}   <br>
                     {!! Form::submit('Ajouter la boule') !!}
                     {!! Form::close() !!}
                 </div>

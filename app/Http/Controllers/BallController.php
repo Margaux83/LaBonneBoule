@@ -15,7 +15,7 @@ class BallController extends Controller
 0     */
     public function index(){
         $balls = DB::table('balls')
-            ->select(DB::raw('id, name'))
+            ->select(DB::raw('id, name, description, price'))
             ->where('isdeleted', '=', 0)
             ->get();
         return view('balls',['balls'=>$balls]);
@@ -31,6 +31,8 @@ class BallController extends Controller
         $ball = new Ball;
         $ball->name = $request->name;
         $ball->image =  $request->image;
+        $ball->description =  $request->description;
+        $ball->price =  $request->price;
         $ball->save();
 
         return redirect('/balls')->with('status', 'Message posted');
@@ -74,6 +76,8 @@ class BallController extends Controller
         $ball = Ball::find($ball_id);
         $ball->name = $request->name;
         $ball->image = $request->image;
+        $ball->description = $request->description;
+        $ball->price = $request->price;
 
         $ball->save();
         return redirect('balls')->with('status', 'Ball updated');
