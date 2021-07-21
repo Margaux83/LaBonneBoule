@@ -35,4 +35,13 @@ Route::get('/addballs', function () {
 
 Route::post('/postBall', [BallController::class, 'save'])->middleware(['auth'])->name('postBall');
 
+
+/**
+ * ==============================================================
+ * GAMES
+ * ==============================================================
+ */
+
+Route::get('/games', [GameController::class, 'index'])->middleware(['auth'])->name('games');
+
 require __DIR__.'/auth.php';

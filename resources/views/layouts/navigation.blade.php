@@ -9,6 +9,7 @@
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                     <a href="{{ route('balls') }}"></a>
+                    <a href="{{ route('games') }}"></a>
                 </div>
 
                 <!-- Navigation Links -->
@@ -17,6 +18,9 @@
                         {{ __('Dashboard') }}
                     </x-nav-link> <x-nav-link :href="route('balls')" :active="request()->routeIs('balls')">
                         {{ __('Liste des boules de pétanque') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
+                        {{ __('Page de test') }}
                     </x-nav-link>
                 </div>
             </div>
