@@ -17,6 +17,12 @@ class TournamentController extends Controller
 
     public function save(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|min:5|max:255',
+            'date_start' => 'required' ,
+            'date_end' => 'required' 
+        ]);
+
         $tournament = new Tournament;
         $tournament->name = $request->name;
         $tournament->date_start = $request->date_start;
@@ -37,5 +43,16 @@ class TournamentController extends Controller
             'tournament' => $tournament,
             'games' => $games
         ]);
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Un nom est nécessaire',
+            'name.min' => 'Le nom doit faire au moins 5 caractères',
+            'name.max' => 'Le nom doit faire au maximum 255 caractères',
+            'date_start.required' => 'Une date est nécessaire',
+            'date_end.required' => 'Une date est nécessaire',
+        ];
     }
 }
