@@ -12,17 +12,20 @@
                     <a href="{{ url('/addteam') }}">
                         <button>Créer une équipe</button>
                     </a>
+                    <ul>
                     @foreach($teams as $team)
                         <a href="/team/{{ $team->id }}">
-                            <div class="container products">
+                            <li>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div style="display: flex; justify-content: space-between;">
                                         <p>{{$team->name}}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
                         </a>
                     @endforeach
+                    </ul>
+                    {{ $teams->links() }}
                 </div>
             </div>
         </div>

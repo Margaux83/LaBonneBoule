@@ -12,17 +12,20 @@
                     <a href="{{ url('/addgame') }}">
                         <button>Créer un match</button>
                     </a>
+                    <ul>
                     @foreach($games as $game)
                         <a href="/game/{{ $game->id }}">
-                            <div class="container products">
+                            <li class="container products">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div style="display: flex; justify-content: space-between;">
-                                        Match {{ $game->id }}
+                                        Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name}}@endif
                                     </div>
                                 </div>
-                            </div>
+                            </li>
                         </a>
                     @endforeach
+                    </ul>
+                    {{ $games->links() }}
                 </div>
             </div>
         </div>

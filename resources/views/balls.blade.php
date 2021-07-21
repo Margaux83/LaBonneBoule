@@ -25,7 +25,7 @@
                                             <p> {{$ball->description}}</p>
                                             <span class="mt-2 text-gray-500"><strong>Price : </strong>{{$ball->price}}€</span>
                                             <p></p>
-                                            (  <a class="btn btn-warning btn-block text-center" role="button"href="/delete/{{ $ball->id }}">Supprimer</a>  |
+                                            (  <a class="btn btn-warning btn-block text-center" role="button" href="/delete/{{ $ball->id }}">Supprimer</a>  |
                                             <a class="btn btn-warning btn-block text-center" href="/update/{{ $ball->id }}">Modifier</a>  |
                                             <a class="btn btn-warning btn-block text-center" href="">Mettre dans le panier</a>
                                             )
@@ -35,9 +35,8 @@
                             </div>
                         </div>
                     @endforeach
-
-                </div>
             </div>
+        </div>
         </div>
     </div>
 </x-app-layout>

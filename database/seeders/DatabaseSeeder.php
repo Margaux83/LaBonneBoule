@@ -22,14 +22,30 @@ class DatabaseSeeder extends Seeder
             'name' => 'AdminESGI',
             'email' => 'esgi-admin@myges.fr',
             'password' => Hash::make('admin'),
+            'balance' => 192300
         ]);
 
+        $items = ['balls' => [1,2,3,4], 'cups' => [3,7]];
+        foreach ($items['balls'] as $key => $itemBall) {
+            DB::table('inventories')->insert([
+                'user_id' => 1,
+                'ball_id' => $itemBall
+            ]);
+        }
+        foreach ($items['cups'] as $key => $itemCup) {
+            DB::table('inventories')->insert([
+                'user_id' => 1,
+                'cup_id' => $itemCup
+            ]);
+        }
+
         $users = ['Maxime Carluer', 'Louis Moulin', 'Loudo Rex-Harrison', 'Margaux Hebert', 'Calvin VeryBadTrip', 'Padito ElChapo', 'Antoine LeBlond', 'Christophe Critique', 'Abdelhamid Jaméla'];
-        for ($i = 0; $i < count($users); $i++) {
+        foreach ($users as $key => $user) {
             DB::table('users')->insert([
-                'name' => $users[$i],
+                'name' => $user,
                 'email' => Str::random(10).'@gmail.com',
                 'password' => Hash::make('password'),
+                'balance' => 100
             ]);
         }
         for ($i = 0; $i <= count($users); $i++) {
@@ -39,9 +55,9 @@ class DatabaseSeeder extends Seeder
         }
 
         $tournaments = ['Premier Tournoi', "Tournoi de l'été", "Tournoi départemental", "Tournoi national", 'Tournoi mondial'];
-        for ($i = 0; $i < count($tournaments); $i++) {
+        foreach ($tournaments as $key => $tournament) {
             DB::table('tournaments')->insert([
-                'name' => $tournaments[$i],
+                'name' => $tournament,
                 'date_start' => new \DateTime(),
                 'date_end' => new \DateTime()
             ]);
@@ -55,6 +71,45 @@ class DatabaseSeeder extends Seeder
                 'loses' => 0,
                 'creator' => $value
             ]);
+        }
+
+        $indexGame = 1;
+        foreach ($tournaments as $keyTournament => $tournament) {
+            foreach ($teams as $keyTeam => $team) {
+                foreach ($teams as $keyTeam2 => $team2) {
+                    if ($team !== $team2) {
+                        if ($keyTournament > 1) {
+                            DB::table('games')->insert([
+                                'tournament_id' => $keyTournament,
+                            ]);
+                            DB::table('teamgames')->insert([
+                                'game_id' => $indexGame,
+                                'team_id' => $team,
+                            ]);
+                            DB::table('teamgames')->insert([
+                                'game_id' => $indexGame,
+                                'team_id' => $team2,
+                            ]);
+                            $indexGame ++;
+                        }else {
+                            $rand = [$team, $team2];
+                            DB::table('games')->insert([
+                                'tournament_id' => $keyTournament,
+                                'winner' => $rand[random_int(0, 1)]
+                            ]);
+                            DB::table('teamgames')->insert([
+                                'game_id' => $indexGame,
+                                'team_id' => $team,
+                            ]);
+                            DB::table('teamgames')->insert([
+                                'game_id' => $indexGame,
+                                'team_id' => $team2,
+                            ]);
+                            $indexGame ++;
+                        }
+                    }
+                }  
+            }
         }
     }
 }

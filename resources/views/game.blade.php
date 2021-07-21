@@ -15,6 +15,9 @@
                                 <h4>
                                     Match {{$game->id}}
                                 </h4>
+                                @if($game->winner)
+                                    <p>Vainqueur : {{$game->getWinner->name}}</p>
+                                @endif
                                 <h5 class="mt-2">Equipes concernées :</h5>
                                 @foreach($teamgames as $key => $teamgame)
                                     <a href="/team/{{ $teamgame->id + 1 }}">

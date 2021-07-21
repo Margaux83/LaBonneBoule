@@ -6,6 +6,7 @@ use App\Models\Ball;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BallController extends Controller
 {
@@ -15,7 +16,7 @@ class BallController extends Controller
 0     */
     public function index(){
         $balls = DB::table('balls')
-            ->select(DB::raw('id, name, description, price'))
+            ->select(DB::raw('id, name, description, price, image'))
             ->where('isdeleted', '=', 0)
             ->get();
         return view('balls',['balls'=>$balls]);
@@ -30,12 +31,12 @@ class BallController extends Controller
     {
         $ball = new Ball;
         $ball->name = $request->name;
-        $ball->image =  $request->image;
-        $ball->description =  $request->description;
-        $ball->price =  $request->price;
+        $ball->image = $request->file('image')->hashName();
+        $request->file('image')->store('public/images/balls');
+        $ball->description = $request->description;
+        $ball->price = $request->price;
         $ball->save();
-
-        return redirect('/balls')->with('status', 'Message posted');
+        return redirect('/balls')->with('status', 'La boule a bien été enregistrée !');
     }
 
     /**
@@ -45,7 +46,7 @@ class BallController extends Controller
      */
     public function update(Request $request)
     {
-        $ball_id =$request->ball_id;
+        $ball_id = $request->ball_id;
         $ball = Ball::find($ball_id);
         return view('updateball',['ball'=>$ball]);
     }
@@ -57,9 +58,10 @@ class BallController extends Controller
      */
     public function delete(Request $request)
     {
-        $ball_id =$request->ball_id;
+        $ball_id = $request->ball_id;
         $ball = Ball::find($ball_id);
         $ball->isdeleted = 1;
+        Storage::delete('public/images/balls/' . $ball->image);
         $ball->save();
         return redirect('balls')->with('status', 'Ball deleted');
     }
@@ -75,10 +77,13 @@ class BallController extends Controller
 
         $ball = Ball::find($ball_id);
         $ball->name = $request->name;
-        $ball->image = $request->image;
         $ball->description = $request->description;
         $ball->price = $request->price;
-
+        if(isset($request->image)) {
+            Storage::delete('public/images/balls/' . $ball->image);
+            $request->file('image')->store('public/images/balls');
+            $ball->image = $request->file('image')->hashName();
+        }
         $ball->save();
         return redirect('balls')->with('status', 'Ball updated');
     }
