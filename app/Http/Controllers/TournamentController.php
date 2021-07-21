@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Game;
 
 class TournamentController extends Controller
 {
@@ -29,6 +30,12 @@ class TournamentController extends Controller
     {
         $tournament_id = $request->tournament_id;
         $tournament = Tournament::find($tournament_id);
-        return view('tournament', ['tournament' => $tournament]);
+
+        $games = Game::where('tournament_id', '=', $tournament_id)->get();
+
+        return view('tournament', [
+            'tournament' => $tournament,
+            'games' => $games
+        ]);
     }
 }

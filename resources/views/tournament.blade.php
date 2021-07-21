@@ -22,6 +22,25 @@
                                     Date de fin : {{$tournament->date_end}} 
                                 </p>
                             </div>
+
+                            <div>
+                                <p>Liste des matchs</p>
+                                <ul>
+                                    <li>
+                                    @foreach($games as $game)
+                                        <a href="/game/{{ $game->id }}">
+                                            <div class="container products">
+                                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                                    <div style="display: flex; justify-content: space-between;">
+                                                        Match {{ $game->id }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @endforeach
+                                    </li>
+                                </ul>
+                            </div>
                         </div><!-- End row -->
                     </div>
                 </div>
