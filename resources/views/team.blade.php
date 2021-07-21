@@ -15,6 +15,7 @@
                                 <h4>
                                     {{$team->name}}
                                 </h4>
+                                <p>Créateur : {{$team->getCreator->name}}</p>
                                 <h5 class="mt-2">Statistiques de l'équipe</h5>
                                 <p>
                                     Victoires : {{$team->wins}} 

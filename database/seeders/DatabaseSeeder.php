@@ -46,5 +46,15 @@ class DatabaseSeeder extends Seeder
                 'date_end' => new \DateTime()
             ]);
         }
+
+        $teams = ['LesFifousDeLeNight' => 1, 'BcpTropSrx' => 2, 'TryHarderDeLXTrem' => 3, 'OkOk' => 4];
+        foreach ($teams as $key => $value) {
+            DB::table('teams')->insert([
+                'name' => $key,
+                'wins' => 0,
+                'loses' => 0,
+                'creator' => $value
+            ]);
+        }
     }
 }

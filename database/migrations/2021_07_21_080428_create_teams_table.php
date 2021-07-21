@@ -18,6 +18,7 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->integer('wins');
             $table->integer('loses');
+            $table->integer('creator');
             $table->timestamps();
         });
     }

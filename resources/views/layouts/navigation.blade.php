@@ -8,6 +8,7 @@
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
+                    <a href="{{ route('games') }}"></a>
                     <a href="{{ route('teams') }}"></a>
                     <a href="{{ route('tournaments') }}"></a>
                     <a href="{{ route('balls') }}"></a>
@@ -18,6 +19,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link> 
+                    <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
+                        {{ __('Matchs') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('teams')" :active="request()->routeIs('teams')">
                         {{ __('Equipes') }}
                     </x-nav-link>
@@ -52,6 +56,11 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Inventaire') }}
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">

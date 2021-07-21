@@ -47,6 +47,11 @@ Route::get('/shoppingcart', [ShoppingcartController::class, 'index'])->middlewar
  */
 
 Route::get('/games', [GameController::class, 'index'])->middleware(['auth'])->name('games');
+Route::get('/game/{game_id}', [GameController::class, 'game'])->middleware(['auth'])->name('game');
+
+Route::get('/addgame', [GameController::class, 'addgame'])->middleware(['auth'])->name('addgame');
+
+Route::post('/postGame', [GameController::class, 'save'])->middleware(['auth'])->name('postGame');
 
 /**
  * ==============================================================
