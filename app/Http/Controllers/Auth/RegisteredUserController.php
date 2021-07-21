@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\ShoppingcartController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Shoppincart;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -46,9 +48,13 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+        $shoppingcart = ShoppingcartController::save([
+            'user_id' => $user["id"]
+        ]);
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+
 }
