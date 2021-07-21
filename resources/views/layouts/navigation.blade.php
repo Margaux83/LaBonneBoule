@@ -8,19 +8,24 @@
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
+                    <a href="{{ route('teams') }}"></a>
+                    <a href="{{ route('tournaments') }}"></a>
                     <a href="{{ route('balls') }}"></a>
-                    <a href="{{ route('games') }}"></a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link> <x-nav-link :href="route('balls')" :active="request()->routeIs('balls')">
-                        {{ __('Liste des boules de pétanque') }}
+                    </x-nav-link> 
+                    <x-nav-link :href="route('teams')" :active="request()->routeIs('teams')">
+                        {{ __('Equipes') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
-                        {{ __('Page de test') }}
+                    <x-nav-link :href="route('tournaments')" :active="request()->routeIs('tournaments')">
+                        {{ __('Tournois') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('balls')" :active="request()->routeIs('balls')">
+                        {{ __('Boules de pétanque') }}
                     </x-nav-link>
                 </div>
             </div>
