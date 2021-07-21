@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\BallController;
+use App\Http\Controllers\ShoppingcartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +36,7 @@ Route::get('/addballs', function () {
 
 Route::post('/postBall', [BallController::class, 'save'])->middleware(['auth'])->name('postBall');
 
-
+Route::get('/shoppingcart', [ShoppingcartController::class, 'index'])->middleware(['auth'])->name('shoppingcart');
 /**
  * ==============================================================
  * GAMES
