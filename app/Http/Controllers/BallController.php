@@ -6,6 +6,7 @@ use App\Models\Ball;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BallController extends Controller
 {
@@ -31,7 +32,7 @@ class BallController extends Controller
         $ball = new Ball;
         $ball->name = $request->name;
         $ball->image = $request->file('image')->hashName();
-        $request->file('image')->store('public/images');
+        $request->file('image')->store('public/images/balls');
         $ball->description = $request->description;
         $ball->price = $request->price;
         $ball->save();
@@ -57,9 +58,10 @@ class BallController extends Controller
      */
     public function delete(Request $request)
     {
-        $ball_id =$request->ball_id;
+        $ball_id = $request->ball_id;
         $ball = Ball::find($ball_id);
         $ball->isdeleted = 1;
+        Storage::delete('public/images/balls/' . $ball->image);
         $ball->save();
         return redirect('balls')->with('status', 'Ball deleted');
     }
