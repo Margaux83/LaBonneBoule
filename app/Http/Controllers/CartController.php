@@ -17,13 +17,6 @@ class CartController extends Controller
         $shoppingCart->save();
     }
 
-
-    public function cartList()
-    {
-       // $cartItems = \Cart::getContent();
-    }
-
-
     public function addToCart(Request $request)
     {
         \Cart::add([
