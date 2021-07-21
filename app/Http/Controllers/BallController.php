@@ -46,7 +46,7 @@ class BallController extends Controller
      */
     public function update(Request $request)
     {
-        $ball_id =$request->ball_id;
+        $ball_id = $request->ball_id;
         $ball = Ball::find($ball_id);
         return view('updateball',['ball'=>$ball]);
     }
@@ -77,10 +77,13 @@ class BallController extends Controller
 
         $ball = Ball::find($ball_id);
         $ball->name = $request->name;
-        $ball->image = $request->image;
         $ball->description = $request->description;
         $ball->price = $request->price;
-
+        if(isset($request->image)) {
+            Storage::delete('public/images/balls/' . $ball->image);
+            $request->file('image')->store('public/images/balls');
+            $ball->image = $request->file('image')->hashName();
+        }
         $ball->save();
         return redirect('balls')->with('status', 'Ball updated');
     }
