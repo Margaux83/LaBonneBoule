@@ -4,6 +4,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\ShoppingcartController;
+use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,5 +83,13 @@ Route::get('/addtournament', function () {
 })->middleware(['auth'])->name('addtournament');
 
 Route::post('/postTournament', [TournamentController::class, 'save'])->middleware(['auth'])->name('postTournament');
+
+
+/**
+ * ==============================================================
+ * INVENTORY
+ * ==============================================================
+ */
+Route::get('/inventory', [InventoryController::class, 'index'])->middleware(['auth'])->name('inventory');
 
 require __DIR__.'/auth.php';
