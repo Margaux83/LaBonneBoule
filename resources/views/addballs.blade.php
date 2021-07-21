@@ -14,7 +14,7 @@
                     {!! Form::label('name', 'Nom :'); !!}   <br>
                     {!! Form::text('name',null, ['required']) !!}   <br>
                     {!! Form::label('image', 'Image :'); !!}   <br>
-                    {!! Form::file('image') !!}   <br>
+                    {!! Form::file('image' , ['required']) !!}   <br>
                     {!! Form::label('description', 'Description :'); !!}   <br>
                     {!! Form::text('description',null) !!}   <br>
                     {!! Form::label('price', 'Prix :'); !!}   <br>
