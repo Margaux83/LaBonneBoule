@@ -3,7 +3,7 @@ use App\Http\Controllers\BallController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TournamentController;
-use App\Http\Controllers\ShoppingcartController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +39,7 @@ Route::get('/addballs', function () {
 
 Route::post('/postBall', [BallController::class, 'save'])->middleware(['auth'])->name('postBall');
 
-Route::get('/shoppingcart', [ShoppingcartController::class, 'index'])->middleware(['auth'])->name('shoppingcart');
+
 /**
  * ==============================================================
  * GAMES
@@ -82,5 +82,12 @@ Route::get('/addtournament', function () {
 })->middleware(['auth'])->name('addtournament');
 
 Route::post('/postTournament', [TournamentController::class, 'save'])->middleware(['auth'])->name('postTournament');
+
+
+Route::get('/shoppingcart', [CartController::class, 'index'])->middleware(['auth'])->name('shoppingcart');
+Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');
+Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('remove', [CartController::class, 'removeCart'])->name('cart.remove');
+Route::post('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 
 require __DIR__.'/auth.php';

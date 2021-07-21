@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\ShoppingcartController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Shoppincart;
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-        $shoppingcart = ShoppingcartController::save([
+        $shoppingcart = CartController::save([
             'user_id' => $user["id"]
         ]);
         Auth::login($user);
