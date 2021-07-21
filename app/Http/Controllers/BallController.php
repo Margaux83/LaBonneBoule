@@ -94,4 +94,13 @@ class BallController extends Controller
         return view('ball',['ball'=>$ball]);
     }
 
+    public function  addToCart(Request $request)
+    {
+        $ball_id =$request->ball_id;
+
+        $ball = Ball::find($ball_id);
+
+
+    }
+
 }
