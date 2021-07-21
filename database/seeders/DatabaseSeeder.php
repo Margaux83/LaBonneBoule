@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
                     if ($team !== $team2) {
                         if ($keyTournament > 1) {
                             DB::table('games')->insert([
-                                'tournament_id' => $keyTournament,
+                                'tournament_id' => ($keyTournament + 1),
                             ]);
                             DB::table('teamgames')->insert([
                                 'game_id' => $indexGame,
@@ -94,7 +94,7 @@ class DatabaseSeeder extends Seeder
                         }else {
                             $rand = [$team, $team2];
                             DB::table('games')->insert([
-                                'tournament_id' => $keyTournament,
+                                'tournament_id' => ($keyTournament + 1),
                                 'winner' => $rand[random_int(0, 1)]
                             ]);
                             DB::table('teamgames')->insert([

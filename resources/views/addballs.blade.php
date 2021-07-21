@@ -16,7 +16,7 @@
                     {!! Form::label('image', 'Image :'); !!}   <br>
                     {!! Form::file('image' , ['required']) !!}   <br>
                     {!! Form::label('description', 'Description :'); !!}   <br>
-                    {!! Form::text('description',null) !!}   <br>
+                    {!! Form::textarea('description',null) !!}   <br>
                     {!! Form::label('price', 'Prix :'); !!}   <br>
                     {!! Form::number('price',null, ['required']) !!}   <br>
                     {!! Form::submit('Ajouter la boule') !!}

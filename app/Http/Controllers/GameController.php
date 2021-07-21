@@ -31,6 +31,13 @@ class GameController extends Controller
 
     public function save(Request $request)
     {
+        $validated = $request->validate([
+            'tournament_id' => 'required',
+            'team1' => 'required',
+            'team2' => 'required'
+        ]);
+
+
         $game = new Game;
         $game->tournament_id = $request->tournament_id;
         $game->save();

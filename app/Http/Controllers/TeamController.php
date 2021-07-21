@@ -16,6 +16,10 @@ class TeamController extends Controller
 
     public function save(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|min:5|max:255'
+        ]);
+
         $team = new Team;
         $team->name = $request->name;
         $team->wins = 0;
