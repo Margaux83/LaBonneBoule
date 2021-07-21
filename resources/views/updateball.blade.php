@@ -10,11 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <p>Modification</p>
-                    {!! Form::open(['route' => 'store']) !!}
+
+                    {!! Form::open(['route' => 'store', 'files' => true]) !!}
                     {!! Form::label('name', 'Nom'); !!}   <br>
                     {!! Form::text('name', $ball->name, ['required']) !!}   <br>
                     {!! Form::label('image', 'Image'); !!}   <br>
-                    {!! Form::file('image', ['required']) !!}   <br>
+                    <img src='{{ asset('storage/images/balls/' . $ball->image) }}'>
+                    {!! Form::file('image') !!}   <br>
                     {!! Form::label('description', 'Description'); !!}   <br>
                     {!! Form::text('description', $ball->description) !!}   <br>
                     {!! Form::label('price', 'Prix'); !!}   <br>

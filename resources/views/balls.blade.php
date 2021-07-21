@@ -15,7 +15,7 @@
                         <div class="container products">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="thumbnail">
-                                        <img src="http://placehold.it/500x300" alt="">
+                                        <img src='{{ asset('storage/images/balls/' . $ball->image) }}'>
                                         <div class="caption">
                                             <h4>  <a href="/ball/{{ $ball->id }}">
                                                     {{$ball->name}}
