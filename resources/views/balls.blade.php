@@ -14,7 +14,7 @@
                         <div class="container px-6 mx-auto">
                             <div class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                     <div class="w-full max-w-sm mx-auto overflow-hidden rounded-md shadow-md">
-                                        <img src="http://placehold.it/500x300" alt="" class="w-full max-h-60">
+                                        <img src='{{ asset('storage/images/balls/' . $ball->image) }}' alt="" class="w-full max-h-60">
                                         <div class="flex items-end justify-end w-full bg-cover">
 
                                         </div>
