@@ -15,10 +15,7 @@ class BallController extends Controller
      * Affichage des boules qui ne sont pas supprimées (isdeleted = 0)
 0     */
     public function index(){
-        $balls = DB::table('balls')
-            ->select(DB::raw('id, name, description, price, image'))
-            ->where('isdeleted', '=', 0)
-            ->get();
+        $balls = Ball::where('isDeleted', '!=', '1')->paginate(6);
         return view('balls',['balls'=>$balls]);
     }
 

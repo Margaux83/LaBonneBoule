@@ -111,5 +111,120 @@ class DatabaseSeeder extends Seeder
                 }  
             }
         }
+
+        $balls = [
+            [
+                'name' => 'Boule COAT',
+                'image' => 'boule_lr_coat.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule HENNOU',
+                'image' => 'boule_lr_hennou.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule SKRZYPCZYK',
+                'image' => 'boule_lr_yves.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule VAUCELLE',
+                'image' => 'boule_lr_vaucelle.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule SERVAL',
+                'image' => 'boule_lr_serval.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule ETCHEBEST',
+                'image' => 'boule_epique_etchebest.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule LA BOULE',
+                'image' => 'boule_epique_laboule.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule THANOS',
+                'image' => 'boule_epique_thanos.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule ZIZOU',
+                'image' => 'boule_epique_zizou.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Gold Match',
+                'image' => 'boule_gold_match.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Gold Obut',
+                'image' => 'boule_gold_obut.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Gold Obut',
+                'image' => 'boule_gold_obut_1.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Gold Obut',
+                'image' => 'boule_gold_obut_2.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Match',
+                'image' => 'boule_normal_match.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Obut',
+                'image' => 'boule_normal_obut.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Obut',
+                'image' => 'boule_normal_obut_1.png',
+                'description' => '',
+                'price' => 270
+            ],
+            [
+                'name' => 'Boule Obut',
+                'image' => 'boule_normal_obut_2.png',
+                'description' => '',
+                'price' => 270
+            ],
+        ];
+
+        foreach ($balls as $key => $ball) {
+            DB::table('balls')->insert([
+                'name' => $ball['name'],
+                'image' => $ball['image'],
+                'description' => $ball['description'],
+                'price' => $ball['price'],
+                'isDeleted' => 0
+            ]);
+        }
     }
 }
