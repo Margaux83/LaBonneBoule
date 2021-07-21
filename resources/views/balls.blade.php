@@ -11,8 +11,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <button><a href="{{ url('/addballs') }}">Ajouter une boule de pétanque</a></button>
                     <br>
+                    <ul>
                     @foreach($balls as $ball)
-                        <div class="container products">
+                        <li class="container products">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="thumbnail">
                                         <img src="http://placehold.it/500x300" alt="">
@@ -29,8 +30,9 @@
                                         </div>
                                     </div>
                             </div>
-                        </div>
+                        </li>
                     @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

@@ -12,17 +12,20 @@
                     <a href="{{ url('/addtournament') }}">
                         <button>Créer un tournoi</button>
                     </a>
+                    <ul>
                     @foreach($tournaments as $tournament)
                         <a href="/tournament/{{ $tournament->id }}">
-                            <div class="container products">
+                            <li class="container products">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div style="display: flex; justify-content: space-between;">
                                         <p>{{$tournament->name}}</p> <p>{{$tournament->date_start}}</p>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
                         </a>
                     @endforeach
+                    </ul>
+                    {{ $tournaments->links() }}
                 </div>
             </div>
         </div>

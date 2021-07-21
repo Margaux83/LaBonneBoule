@@ -11,7 +11,7 @@ class TournamentController extends Controller
 {
     public function index()
     {
-        $tournaments = Tournament::paginate(50);
+        $tournaments = Tournament::paginate(20);
         return view('tournaments', ['tournaments' => $tournaments]);
     }
 
