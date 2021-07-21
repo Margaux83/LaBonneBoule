@@ -15,7 +15,7 @@ class BallController extends Controller
 0     */
     public function index(){
         $balls = DB::table('balls')
-            ->select(DB::raw('id, name, description, price'))
+            ->select(DB::raw('id, name, description, price, image'))
             ->where('isdeleted', '=', 0)
             ->get();
         return view('balls',['balls'=>$balls]);
@@ -30,12 +30,12 @@ class BallController extends Controller
     {
         $ball = new Ball;
         $ball->name = $request->name;
-        $ball->image =  $request->image;
-        $ball->description =  $request->description;
-        $ball->price =  $request->price;
+        $ball->image = $request->file('image')->hashName();
+        $request->file('image')->store('public/images');
+        $ball->description = $request->description;
+        $ball->price = $request->price;
         $ball->save();
-
-        return redirect('/balls')->with('status', 'Message posted');
+        return redirect('/balls')->with('status', 'La boule a bien été enregistrée !');
     }
 
     /**
