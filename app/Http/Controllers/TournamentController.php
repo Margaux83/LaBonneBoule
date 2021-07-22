@@ -6,6 +6,7 @@ use App\Models\Tournament;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Game;
+use App\Models\Teamgame;
 
 class TournamentController extends Controller
 {
@@ -32,15 +33,27 @@ class TournamentController extends Controller
         return redirect('/tournaments')->with('status', 'Message posted');
     }
 
-    public function tournament(Request $request)
-    {
+    public function tournament(Request $request) {
         $tournament_id = $request->tournament_id;
+        return $this->tournamentFromId($tournament_id);
+    }
+
+    public function tournamentFromId($tournament_id)
+    {
         $tournament = Tournament::find($tournament_id);
 
         $games = Game::where('tournament_id', '=', $tournament_id)->get();
 
+        $tournamentMaxRound = 1;
+        foreach ($games as $key => $game) {
+            if ($game->tournament_round > $tournamentMaxRound) {
+                $tournamentMaxRound = $game->tournament_round;
+            }
+        }
+
         return view('tournament', [
             'tournament' => $tournament,
+            'tournamentMaxRound' => $tournamentMaxRound,
             'games' => $games
         ]);
     }

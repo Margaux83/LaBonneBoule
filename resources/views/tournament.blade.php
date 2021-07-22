@@ -12,9 +12,12 @@
                     <div class="container products">
                         <div class="row">
                             <div class="col-xs-18 col-sm-6 col-md-3">
-                                <h4>
+                                <h4 style="font-weight: bold; font-size: 20px;">
                                     {{$tournament->name}}
                                 </h4>
+                                @if($tournament->winner !== null)
+                                    <p>Vainqueur : {{$tournament->getWinner->name}}</p>
+                                @endif
                                 <p>
                                     Date de début : {{$tournament->date_start}} 
                                 </p>
@@ -23,23 +26,26 @@
                                 </p>
                             </div>
 
-                            <div>
+                            <div class="mt-5">
                                 <p>Liste des matchs</p>
-                                <ul>
-                                    <li>
-                                    @foreach($games as $game)
-                                        <a href="/game/{{ $game->id }}">
-                                            <div class="container products">
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div style="display: flex; justify-content: space-between;">
-                                                        Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name}}@endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                    </li>
-                                </ul>
+                                @for ($i = 1; $i <= $tournamentMaxRound; $i++)
+                                    <p class="mt-2">Round {{$i}}</p>
+                                    <ul>
+                                        @foreach($games as $game)
+                                            @if($game->tournament_round === $i)
+                                                <a href="/game/{{ $game->id }}">
+                                                    <li class="container products" style="padding: 10px; border: 1px solid lightgrey;">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <div style="display: flex; justify-content: space-between;">
+                                                                Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name}}@endif
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                @endfor
                             </div>
                         </div><!-- End row -->
                     </div>

@@ -12,7 +12,7 @@
                     <div class="container products">
                         <div class="row">
                             <div class="col-xs-18 col-sm-6 col-md-3">
-                                <h4>
+                            <h4 style="font-weight: bold; font-size: 20px;">
                                     {{$team->name}}
                                 </h4>
                                 <p>Créateur : {{$team->getCreator->name}}</p>

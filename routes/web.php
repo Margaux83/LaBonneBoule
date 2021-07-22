@@ -53,6 +53,7 @@ Route::get('/game/{game_id}', [GameController::class, 'game'])->middleware(['aut
 Route::get('/addgame', [GameController::class, 'addgame'])->middleware(['auth'])->name('addgame');
 
 Route::post('/postGame', [GameController::class, 'save'])->middleware(['auth'])->name('postGame');
+Route::get('/gameSetWinner/{game_id}/{team_id}', [GameController::class, 'gameSetWinner'])->middleware(['auth'])->name('gameSetWinner');
 
 /**
  * ==============================================================
@@ -84,6 +85,11 @@ Route::get('/addtournament', function () {
 
 Route::post('/postTournament', [TournamentController::class, 'save'])->middleware(['auth'])->name('postTournament');
 
+/**
+ * ==============================================================
+ * SHOPPINGCART
+ * ==============================================================
+ */
 
 Route::get('/shoppingcart', [CartController::class, 'index'])->middleware(['auth'])->name('shoppingcart');
 Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');
