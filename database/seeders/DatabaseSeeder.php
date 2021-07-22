@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'balance' => 192300
         ]);
 
-        $items = ['balls' => [1,2,3,4], 'cups' => [3,7]];
+        $items = ['balls' => [1,2,3,4], 'cups' => []];
         foreach ($items['balls'] as $key => $itemBall) {
             DB::table('inventories')->insert([
                 'user_id' => 1,
@@ -56,60 +56,103 @@ class DatabaseSeeder extends Seeder
 
         $tournaments = ['Premier Tournoi', "Tournoi de l'été", "Tournoi départemental", "Tournoi national", 'Tournoi mondial'];
         foreach ($tournaments as $key => $tournament) {
-            DB::table('tournaments')->insert([
-                'name' => $tournament,
-                'date_start' => new \DateTime(),
-                'date_end' => new \DateTime()
-            ]);
+            
         }
 
         $teams = ['LesFifousDeLeNight' => 1, 'BcpTropSrx' => 2, 'TryHarderDeLXTrem' => 3, 'OkOk' => 4];
-        foreach ($teams as $key => $value) {
-            DB::table('teams')->insert([
-                'name' => $key,
+
+        $teamsResults = [
+            1 => [
                 'wins' => 0,
                 'loses' => 0,
-                'creator' => $value
-            ]);
-        }
-
+            ],
+            2 => [
+                'wins' => 0,
+                'loses' => 0,
+            ],
+            3 => [
+                'wins' => 0,
+                'loses' => 0,
+            ],
+            4 => [
+                'wins' => 0,
+                'loses' => 0,
+            ],
+        ];
+        
         $indexGame = 1;
         foreach ($tournaments as $keyTournament => $tournament) {
-            foreach ($teams as $keyTeam => $team) {
-                foreach ($teams as $keyTeam2 => $team2) {
-                    if ($team !== $team2) {
+            $nbRound = 1;
+            $nextRound = [1,2,3,4];
+            shuffle($nextRound);
+            $winnerTournament = null;
+            while (count($nextRound) > 1 && $winnerTournament === null) {
+                $nextRoundCopy = [];
+                for ($i = 0; $i < count($nextRound); $i += 2) {
+                    if (($i + 1) <= count($nextRound)) {
                         if ($keyTournament > 1) {
                             DB::table('games')->insert([
+                                'tournament_round' => $nbRound,
                                 'tournament_id' => ($keyTournament + 1),
                             ]);
                             DB::table('teamgames')->insert([
                                 'game_id' => $indexGame,
-                                'team_id' => $team,
+                                'team_id' => $nextRound[$i],
                             ]);
                             DB::table('teamgames')->insert([
                                 'game_id' => $indexGame,
-                                'team_id' => $team2,
+                                'team_id' => $nextRound[$i + 1],
                             ]);
                             $indexGame ++;
                         }else {
-                            $rand = [$team, $team2];
+                            $rand = [$nextRound[$i], $nextRound[$i + 1]];
+                            $indexWinner = random_int(0, 1);
+                            $winnerGame = $rand[$indexWinner];
+                            $loserGame = $rand[$indexWinner === 0 ? 1 : 0];
+
+                            $teamsResults[$winnerGame]['wins'] ++;
+                            $teamsResults[$loserGame]['loses'] ++;
+                            array_push($nextRoundCopy, $winnerGame);
                             DB::table('games')->insert([
+                                'tournament_round' => $nbRound,
                                 'tournament_id' => ($keyTournament + 1),
-                                'winner' => $rand[random_int(0, 1)]
+                                'winner' => $winnerGame
                             ]);
                             DB::table('teamgames')->insert([
                                 'game_id' => $indexGame,
-                                'team_id' => $team,
+                                'team_id' => $nextRound[$i],
                             ]);
                             DB::table('teamgames')->insert([
                                 'game_id' => $indexGame,
-                                'team_id' => $team2,
+                                'team_id' => $nextRound[$i + 1],
                             ]);
                             $indexGame ++;
                         }
                     }
-                }  
+                }
+                $nbRound ++;
+                $nextRound = $nextRoundCopy;
+
+                if (count($nextRound) === 1) {
+                    $winnerTournament = $nextRound[0];
+                }
             }
+
+            DB::table('tournaments')->insert([
+                'name' => $tournament,
+                'date_start' => new \DateTime(),
+                'date_end' => new \DateTime(),
+                'winner' => $winnerTournament
+            ]);
+        }
+
+        foreach ($teams as $key => $value) {
+            DB::table('teams')->insert([
+                'name' => $key,
+                'wins' => $teamsResults[$value]['wins'],
+                'loses' => $teamsResults[$value]['loses'],
+                'creator' => $value
+            ]);
         }
 
         $balls = [

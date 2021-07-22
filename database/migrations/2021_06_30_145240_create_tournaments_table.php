@@ -18,6 +18,7 @@ class CreateTournamentsTable extends Migration
             $table->string('name');
             $table->date('date_start');
             $table->date('date_end');
+            $table->integer('winner')->nullable();
             $table->timestamps();
         });
     }

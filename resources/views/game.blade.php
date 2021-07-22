@@ -12,7 +12,7 @@
                     <div class="container products">
                         <div class="row">
                             <div class="col-xs-18 col-sm-6 col-md-3">
-                                <h4>
+                                <h4 style="font-weight: bold; font-size: 20px;">
                                     Match {{$game->id}}
                                 </h4>
                                 @if($game->winner)
@@ -20,15 +20,20 @@
                                 @endif
                                 <h5 class="mt-2">Equipes concernées :</h5>
                                 @foreach($teamgames as $key => $teamgame)
-                                    <a href="/team/{{ $teamgame->id + 1 }}">
-                                        <div class="container products">
-                                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                                <div style="display: flex; justify-content: space-between;">
-                                                    Equipe {{$key + 1}} : {{ $teamgame->getTeam->name}}
-                                                </div>
+                                    <div class="container products mb-2">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div style="display: flex; align-items: center;">
+                                                @if($game->winner === null)
+                                                    <a href="/gameSetWinner/{{$game->id}}/{{$teamgame->getTeam->id}}">
+                                                        <button class="px-2 py-1 text-white bg-blue-500 mr-1">Vainqueur</button>
+                                                    </a>
+                                                @endif
+                                                <a href="/team/{{ $teamgame->getTeam->id }}">
+                                                    <p>Equipe {{$key + 1}} : {{ $teamgame->getTeam->name}}</p>
+                                                </a>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 @endforeach
                             </div>
                         </div><!-- End row -->

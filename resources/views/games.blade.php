@@ -10,12 +10,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <a href="{{ url('/addgame') }}">
-                        <button>Créer un match</button>
+                        <button class="px-2 py-1 text-white bg-blue-500 mb-5">+ Créer un match</button>
                     </a>
-                    <ul>
+                    <ul class="mb-2">
                     @foreach($games as $game)
                         <a href="/game/{{ $game->id }}">
-                            <li class="container products">
+                            <li class="container products" style="padding: 10px; border: 1px solid lightgrey;">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div style="display: flex; justify-content: space-between;">
                                         Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name}}@endif
