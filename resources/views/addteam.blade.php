@@ -11,6 +11,9 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     {!! Form::open(['url' => 'postTeam']) !!}
 
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('name', 'Nom :'); !!}   <br>
                     {!! Form::text('name',null, ['required']) !!}   <br>
 
