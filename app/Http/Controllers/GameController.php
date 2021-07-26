@@ -37,7 +37,6 @@ class GameController extends Controller
             'team2' => 'required'
         ]);
 
-
         $game = new Game;
         $game->tournament_id = $request->tournament_id;
         $game->save();

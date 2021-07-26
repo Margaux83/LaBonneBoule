@@ -9,9 +9,11 @@
         <div class="max-w-7xl mx-auto sm:px-12 lg:px-12">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <a href="{{ url('/addgame') }}">
-                        <button class="px-2 py-1 text-white bg-blue-500 mb-5">+ Créer un match</button>
-                    </a>
+                    @if(auth()->user()->isAbleTo('createBall'))
+                        <a href="{{ url('/addgame') }}">
+                            <button class="px-2 py-1 text-white bg-blue-500 mb-5">+ Créer un match</button>
+                        </a>
+                    @endif
                     <ul class="mb-2">
                     @foreach($games as $game)
                         <a href="/game/{{ $game->id }}">
