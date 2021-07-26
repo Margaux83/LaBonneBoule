@@ -9,84 +9,69 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <p>Liste des boules dans votre panier</p>
                     <div class="container px-6 mx-auto">
-                        <div class="flex justify-center my-6">
-                            <div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
-                                <h3 class="text-3xl text-bold">Cart List</h3>
-                                <div class="flex-1">
-                                    <table class="w-full text-sm lg:text-base" cellspacing="0">
-                                        <thead>
-                                        <tr class="h-12 uppercase">
-                                            <th class="hidden md:table-cell"></th>
-                                            <th class="text-left">Nom</th>
-                                            <th class="pl-5 text-left lg:text-right lg:pl-0">
-                                                <span class="lg:hidden" title="Quantity">Qté</span>
-                                                <span class="hidden lg:inline">Quantité</span>
-                                            </th>
-                                            <th class="hidden text-right md:table-cell">Prix</th>
-                                            <th class="hidden text-right md:table-cell"> Supprimer </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="hidden pb-4 md:table-cell">
-                                                    <a href="#">
-                                                        <img src="http://placehold.it/500x300" class="w-20 rounded">
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="#">
-                                                        <p class="mb-2 md:ml-4">Nom de la boule</p>
-
-                                                    </a>
-                                                </td>
-                                                <td class="justify-center mt-6 md:justify-end md:flex">
-                                                    <div class="h-10 w-28">
-                                                        <div class="relative flex flex-row w-full h-8">
-
-                                                            <form >
-                                                                @csrf
-                                                                <input type="hidden" name="id" value="" >
-                                                                <input type="number" name="quantity" value=""
-                                                                       class="w-6 text-center bg-gray-300" />
-                                                                <button type="submit" class="px-2 pb-2 ml-2 text-white bg-blue-500">update</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="hidden text-right md:table-cell">
-                                <span class="text-sm font-medium lg:text-base">
-                                  11110€
-                                </span>
-                                                </td>
-                                                <td class="hidden text-right md:table-cell">
-                                                    <form >
-                                                        @csrf
-                                                        <input type="hidden" value="" name="id">
-                                                        <button class="px-4 py-2 text-white bg-red-600">x</button>
-                                                    </form>
-
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                    <div>
-                                        Total: 100€
-                                    </div>
-                                    <div>
-                                        <form>
-                                            @csrf
-                                            <button class="px-6 py-2 text-red-800 bg-red-300">Remove All Cart</button>
-                                        </form>
-                                    </div>
-
-
-                                </div>
-                            </div>
+                        <div style="display: flex; justify-content: space-between">
+                            <h3 class="text-3xl text-bold">Votre panier</h3>
+                            <p>Votre solde : {{auth()->user()->balance}} €</p> 
                         </div>
+                        
+                        @if(count($shoppingElements))
+                        <div class="mt-5">
+                                <a href="/balls">
+                                    <button class="px-2 py-1 text-white bg-blue-500 mb-5">Continuer mes achats</button>
+                                </a>
+                            </div>
+                            <table style="width: 100%; text-align: center;">
+                                <thead class="text-white bg-blue-500">
+                                    <tr>
+                                        <th class="px-2 py-1">Nb</th>
+                                        <th style="text-align: center;">Image</th>
+                                        <th>Nom du produit</th>
+                                        <th>Description</th>
+                                        <th>Prix</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($shoppingElements as $keyBall => $shoppingElement)
+                                        <tr  style="border: 1px solid lightgrey; border-top: 0">
+                                            <td class="px-2 py-5" style="width: 60px;">
+                                                <a href="/removeToCartFromCart/{{$keyBall}}">
+                                                    <button>-</button>
+                                                </a>
+                                                {{$shoppingElement['count']}}
+                                                <a href="/addToCartFromCart/{{$keyBall}}">
+                                                    <button>+</button>
+                                                </a>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <img src='{{ asset('storage/images/balls/' . $shoppingElement['element']->getBall->image) }}' alt="" style="width: 80px; height: auto;  margin: auto;">
+                                            </td>
+                                            <td>{{$shoppingElement['element']->getBall->name}}</td>
+                                            <td>{{$shoppingElement['element']->getBall->description}}</td>
+                                            <td style="width: 50px;">{{$shoppingElement['element']->getBall->price}} €</td>
+                                            <td style="width: 40px;">
+                                                <a href="/deleteToCart/{{$keyBall}}">
+                                                    <button style="padding: 1px 7px;color: white; background-color: red; border-radius: 50%;">X</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
 
+                            <a href="/deleteCart">
+                                <button class="px-2 py-1 text-white bg-red-500 mt-5">Vider mon panier</button>
+                            </a>
+                        @else
+                            <div class="mt-5">
+                                <p class="mb-5">Vous n'avez pas de boules... dans votre panier ! Vous trouverez à coup sûr les boules faites pour vous dans la boutique</p>
+                                <a href="/balls">
+                                    <button class="px-2 py-1 text-white bg-blue-500 mb-5">Accéder à la boutique</button>
+                                </a>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
