@@ -3,12 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Shoppingcart;
+use App\Models\Shoppingcartball;
+use App\Models\User;
 
 class CartController extends Controller
 {
 
-    public function index(){
-        return view('shoppingcart');
+    public function shoppingcart()
+    {
+        $user_id = auth()->user()->id;
+        $shoppingCart = Shoppingcart::where('user_id', '=', $user_id)->get();
+
+        $shoppingElements = [];
+        if (count($shoppingCart)) {
+            $shoppingElementsFounded = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCart[0]->id)->get();
+        };
+
+        foreach ($shoppingElementsFounded as $key => $shoppingElementFounded) {
+            $shoppingElements[$shoppingElementFounded->ball_id] = [
+                'element' => $shoppingElementFounded,
+                'count' => Shoppingcartball::where('ball_id', '=', $shoppingElementFounded->ball_id)->count()
+            ];
+        }
+
+        return view('shoppingcart', [
+            'shoppingElements' => $shoppingElements
+        ]);
     }
 
     public static function save($request){
@@ -19,51 +40,101 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        \Cart::add([
-            'id' => $request->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'attributes' => array(
-                'image' => $request->image,
-            )
-        ]);
-        session()->flash('success', 'Product is Added to Cart Successfully !');
+        $ball_id = $request->ball_id;
+        $user_id = auth()->user()->id;
+        $shoppingCart = Shoppingcart::where('user_id', '=', $user_id)->get();
 
-        return redirect()->route('cart.list');
+        if (count($shoppingCart)) {
+            $shoppingCartSelected = $shoppingCart[0];
+        }else {
+            $shoppingCartSelected = new Shoppingcart;
+            $shoppingCartSelected->user_id = $user_id;
+            $shoppingCartSelected->save();
+        }
+
+        $shoppingCartBall = new Shoppingcartball;
+        $shoppingCartBall->shoppingcart_id = $shoppingCartSelected->id;
+        $shoppingCartBall->ball_id = $ball_id;
+        $shoppingCartBall->save();
+
+        return redirect()->route('balls');
     }
 
-    public function updateCart(Request $request)
+    public function addToCartFromCart(Request $request)
     {
-        \Cart::update(
-            $request->id,
-            [
-                'quantity' => [
-                    'relative' => false,
-                    'value' => $request->quantity
-                ],
-            ]
-        );
+        $ball_id = $request->ball_id;
+        $user_id = auth()->user()->id;
+        $shoppingCart = Shoppingcart::where('user_id', '=', $user_id)->get();
 
-        session()->flash('success', 'Item Cart is Updated Successfully !');
+        $shoppingCartSelected = $shoppingCart[0];
 
-        return redirect()->route('cart.list');
+        $shoppingCartBall = new Shoppingcartball;
+        $shoppingCartBall->shoppingcart_id = $shoppingCartSelected->id;
+        $shoppingCartBall->ball_id = $ball_id;
+        $shoppingCartBall->save();
+
+        return redirect()->route('shoppingcart');
     }
 
+    public function removeToCartFromCart(Request $request)
+    {
+        $ball_id = $request->ball_id;
+        $user_id = auth()->user()->id;
+        $shoppingCart = Shoppingcart::where('user_id', '=', $user_id)->get();
+
+        $shoppingCartSelected = $shoppingCart[0];
+
+        $shoppingCartBall = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCartSelected->id)
+            ->where('ball_id', '=', $ball_id)
+            ->first();
+        $shoppingCartBall->delete();
+
+        return redirect()->route('shoppingcart');
+    }
+
+    public function deleteToCart(Request $request)
+    {
+        $ball_id = $request->ball_id;
+        $user_id = auth()->user()->id;
+        $shoppingCart = Shoppingcart::where('user_id', '=', $user_id)->get();
+
+        $shoppingCartSelected = $shoppingCart[0];
+
+        $shoppingCartBalls = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCartSelected->id)
+            ->where('ball_id', '=', $ball_id)
+            ->get();
+        foreach ($shoppingCartBalls as $key => $shoppingCartBall) {
+            $shoppingCartBall->delete();
+        }
+
+        return redirect()->route('shoppingcart');
+    }
+
+    public function deleteCart(Request $request)
+    {
+        $user_id = auth()->user()->id;
+        $shoppingCarts = Shoppingcart::where('user_id', '=', $user_id)->get();
+
+        foreach ($shoppingCarts as $key => $shoppingCart) {
+            $shoppingCartBalls = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCart->id)->get();
+
+            foreach ($shoppingCartBalls as $key => $shoppingCartBall) {
+                $shoppingCartBall->delete();
+            }
+        }
+           
+        return redirect()->route('shoppingcart'); 
+    }
+
+    /*
     public function removeCart(Request $request)
     {
-        \Cart::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
-
         return redirect()->route('cart.list');
     }
 
     public function clearAllCart()
     {
-        \Cart::clear();
-
-        session()->flash('success', 'All Item Cart Clear Successfully !');
-
         return redirect()->route('cart.list');
     }
+    */
 }

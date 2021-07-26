@@ -12,12 +12,10 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        $connectedUser = auth()->user();
-        $inventory = Inventory::where('user_id', '=', $connectedUser->id)->get();
+        $inventory = Inventory::where('user_id', '=', auth()->user()->id)->get();
 
         return view('inventory', [
-            'inventory' => $inventory,
-            'connectedUser' => $connectedUser
+            'inventory' => $inventory
         ]);
     }
 }

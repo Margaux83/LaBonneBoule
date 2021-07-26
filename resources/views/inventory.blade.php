@@ -13,7 +13,7 @@
                         <a href="{{ url('/shopping') }}">
                             <button class="px-2 py-1 text-white bg-blue-500 mb-5">Accéder à la boutique</button>
                         </a>
-                        <p>Balance : {{$connectedUser->balance}} €</p>
+                        <p>Votre solde : {{auth()->user()->balance}} €</p>
                     </div>
 
                     <h4 class="my-2" style="font-weight: bold; font-size: 20px;">Boules possédées</h4>

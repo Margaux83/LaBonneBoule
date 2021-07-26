@@ -24,9 +24,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->name('dashboard');
 
-Route::get('/balls', [BallController::class, 'index'])->middleware(['auth'])->name('balls');
+Route::get('/balls', [BallController::class, 'index'])->name('balls');
 
 Route::get('/update/{ball_id}', [BallController::class, 'update'])->middleware(['auth'])->name('update_form');
 Route::post('/update', [BallController::class, 'store'])->middleware(['auth'])->name('store');
@@ -47,8 +47,8 @@ Route::post('/postBall', [BallController::class, 'save'])->middleware(['auth'])-
  * ==============================================================
  */
 
-Route::get('/games', [GameController::class, 'index'])->middleware(['auth'])->name('games');
-Route::get('/game/{game_id}', [GameController::class, 'game'])->middleware(['auth'])->name('game');
+Route::get('/games', [GameController::class, 'index'])->name('games');
+Route::get('/game/{game_id}', [GameController::class, 'game'])->name('game');
 
 Route::get('/addgame', [GameController::class, 'addgame'])->middleware(['auth'])->name('addgame');
 
@@ -61,8 +61,8 @@ Route::get('/gameSetWinner/{game_id}/{team_id}', [GameController::class, 'gameSe
  * ==============================================================
  */
 
-Route::get('/teams', [TeamController::class, 'index'])->middleware(['auth'])->name('teams');
-Route::get('/team/{team_id}', [TeamController::class, 'team'])->middleware(['auth'])->name('team');
+Route::get('/teams', [TeamController::class, 'index'])->name('teams');
+Route::get('/team/{team_id}', [TeamController::class, 'team'])->name('team');
 
 Route::get('/addteam', function () {
     return view('addteam');
@@ -82,8 +82,8 @@ Route::get('/fireMember/{user_id}', [TeamController::class, 'fireMember'])->midd
  * ==============================================================
  */
 
-Route::get('/tournaments', [TournamentController::class, 'index'])->middleware(['auth'])->name('tournaments');
-Route::get('/tournament/{tournament_id}', [TournamentController::class, 'tournament'])->middleware(['auth'])->name('tournament');
+Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments');
+Route::get('/tournament/{tournament_id}', [TournamentController::class, 'tournament'])->name('tournament');
 
 Route::get('/addtournament', function () {
     return view('addtournament');
@@ -97,11 +97,21 @@ Route::post('/postTournament', [TournamentController::class, 'save'])->middlewar
  * ==============================================================
  */
 
-Route::get('/shoppingcart', [CartController::class, 'index'])->middleware(['auth'])->name('shoppingcart');
-Route::post('cart', [CartController::class, 'addToCart'])->name('cart.store');
-Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-Route::post('remove', [CartController::class, 'removeCart'])->name('cart.remove');
-Route::post('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
+Route::get('/shoppingcart', [CartController::class, 'shoppingcart'])->middleware(['auth'])->name('shoppingcart');
+Route::get('/addToCart/{ball_id}', [CartController::class, 'addToCart'])->middleware(['auth'])->name('addToCart');
+
+Route::get('/removeToCartFromCart/{ball_id}', [CartController::class, 'removeToCartFromCart'])->middleware(['auth'])->name('removeToCartFromCart');
+Route::get('/addToCartFromCart/{ball_id}', [CartController::class, 'addToCartFromCart'])->middleware(['auth'])->name('addToCartFromCart');
+Route::get('/deleteToCart/{ball_id}', [CartController::class, 'deleteToCart'])->middleware(['auth'])->name('deleteToCart');
+
+Route::get('/deleteCart', [CartController::class, 'deleteCart'])->middleware(['auth'])->name('deleteCart');
+
+
+/*
+Route::post('cart', [CartController::class, 'addToCart'])->middleware(['auth'])->name('cart.store');
+Route::post('update-cart', [CartController::class, 'updateCart'])->middleware(['auth'])->name('cart.update');
+Route::post('remove', [CartController::class, 'removeCart'])->middleware(['auth'])->name('cart.remove');
+Route::post('clear', [CartController::class, 'clearAllCart'])->middleware(['auth'])->name('cart.clear');
 
 /**
  * ==============================================================
