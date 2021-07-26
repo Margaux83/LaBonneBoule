@@ -26,6 +26,12 @@ class BallController extends Controller
      */
     public function save(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required',
+            'image' => 'required',
+            'price' => 'numeric|min:20|required'
+        ]);
+
         $ball = new Ball;
         $ball->name = $request->name;
         $ball->image = $request->file('image')->hashName();

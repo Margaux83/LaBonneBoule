@@ -16,7 +16,7 @@
                         <p>Balance : {{$connectedUser->balance}} €</p>
                     </div>
 
-                    <p class="mt-2">Boules possédées</p>
+                    <h4 class="my-2" style="font-weight: bold; font-size: 20px;">Boules possédées</h4>
                     <ul style="display: flex; flex-wrap: wrap; justify-content: center;">
                         @foreach($inventory as $inventoryItem)
                             @if($inventoryItem->ball_id !== null)
@@ -37,7 +37,7 @@
                         @endforeach
                     </ul>
 
-                    <p class="mt-2">Coupes possédées</p>
+                    <h4 class="my-2" style="font-weight: bold; font-size: 20px;">Coupes possédées</h4>
                     <ul>
                         @foreach($inventory as $inventoryItem)
                             @if($inventoryItem->cup_id !== null)

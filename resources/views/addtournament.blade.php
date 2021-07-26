@@ -11,12 +11,21 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     {!! Form::open(['url' => 'postTournament']) !!}
 
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('name', 'Nom :'); !!}   <br>
                     {!! Form::text('name',null, ['required']) !!}   <br>
                     
+                    @error('date_start')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('date_start', 'Début :'); !!}   <br>
                     {!! Form::date('date_start',null, ['required']) !!}   <br>
 
+                    @error('date_end')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('date_end', 'Fin :'); !!}   <br>
                     {!! Form::date('date_end',null, ['required']) !!}   <br>
 

@@ -11,14 +11,31 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <p>Ajout</p>
                     {!! Form::open(['url' => 'postBall', 'files' => true]) !!}
+
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('name', 'Nom :'); !!}   <br>
                     {!! Form::text('name',null, ['required']) !!}   <br>
+
+                    @error('image')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('image', 'Image :'); !!}   <br>
                     {!! Form::file('image' , ['required']) !!}   <br>
+
+                    @error('description')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('description', 'Description :'); !!}   <br>
                     {!! Form::textarea('description',null) !!}   <br>
+
+                    @error('price')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('price', 'Prix :'); !!}   <br>
                     {!! Form::number('price',null, ['required']) !!}   <br>
+
                     {!! Form::submit('Ajouter la boule') !!}
                     {!! Form::close() !!}
                 </div>

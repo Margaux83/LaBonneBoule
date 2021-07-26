@@ -12,8 +12,15 @@
                     <p>Création</p>
                     {!! Form::open(['url' => 'postGame']) !!}
 
+                    @error('team1')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('team1', 'Team 1 :'); !!}   <br>
                     {!! Form::select('team1', $teams, null, ['placeholder' => 'Sélectionnez une équipe', 'required' => true]); !!}   <br>
+                    
+                    @error('team2')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     {!! Form::label('team2', 'Team 2 :'); !!}   <br>
                     {!! Form::select('team2', $teams, null, ['placeholder' => 'Sélectionnez l\'autre équipe', 'required' => true]); !!}   <br>
 
