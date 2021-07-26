@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Date;
+use App\Models\Role;
+use App\Models\Permission;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,13 +20,56 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //COMPTE ADMIN : A ne pas faire évidemment, c'est juste pour la présentation
+        $admin = Role::create([
+            'name' => 'admin',
+            'display_name' => 'User Administrator',
+            'description' => 'Admin is able to manage all the site',
+        ]);
+        $referee = Role::create([
+            'name' => 'referee',
+            'display_name' => 'User Referee',
+            'description' => 'referee is able to manage games',
+        ]);
+
+        $createGame = Permission::create([
+            'name' => 'createGame',
+            'display_name' => 'Create Games', // optional
+            'description' => 'create new blog games', // optional
+        ]);
+        $createTournament = Permission::create([
+            'name' => 'createTournament',
+            'display_name' => 'Create Tournaments', // optional
+            'description' => 'create new blog games', // optional
+        ]);
+        $createBall = Permission::create([
+            'name' => 'createBall',
+            'display_name' => 'Create Balls', // optional
+            'description' => 'create new blog games', // optional
+        ]);
+        $manageGame = Permission::create([
+            'name' => 'manageGame',
+            'display_name' => 'Manage Games', // optional
+            'description' => 'manage games', // optional
+        ]);
+
+        //COMPTE ADMIN : A ne pas laisser public évidemment, c'est juste pour la présentation
         DB::table('users')->insert([
             'name' => 'AdminESGI',
+            'team_id' => 1,
+            'team_accepted' => true,
             'email' => 'esgi-admin@myges.fr',
             'password' => Hash::make('admin'),
             'balance' => 192300
         ]);
+
+        $user = User::find(1);
+        $user->attachRole('admin');
+
+        $admin->attachPermission($createGame);
+        $admin->attachPermission($createTournament);
+        $admin->attachPermission($createBall);
+
+        $referee->attachPermission($manageGame);
 
         $items = ['balls' => [1,2,3,4], 'cups' => []];
         foreach ($items['balls'] as $key => $itemBall) {
@@ -40,17 +86,26 @@ class DatabaseSeeder extends Seeder
         }
 
         $users = ['Maxime Carluer', 'Louis Moulin', 'Loudo Rex-Harrison', 'Margaux Hebert', 'Calvin VeryBadTrip', 'Padito ElChapo', 'Antoine LeBlond', 'Christophe Critique', 'Abdelhamid Jaméla'];
+        $teamUser = [2, 3, 4, 1, 2, 3, 4, 1, 2];
+        $teamUserAccepted = [true, true, true, true, true, true];
+        $mailUser = ['carluer.maxime@gmail.com'];
         foreach ($users as $key => $user) {
             DB::table('users')->insert([
                 'name' => $user,
-                'email' => Str::random(10).'@gmail.com',
+                'team_id' => $teamUser[$key],
+                'team_accepted' => $teamUserAccepted[$key] ?? false,
+                'email' => $mailUser[$key] ?? Str::random(10).'@gmail.com',
                 'password' => Hash::make('password'),
                 'balance' => 100
             ]);
         }
         for ($i = 0; $i <= count($users); $i++) {
+            if ($i < 4) {
+                $user = User::find($i + 2);
+                $user->attachRole('referee');
+            }
             DB::table('shoppingcarts')->insert([
-                'user_id' => $i,
+                'user_id' => ($i + 1),
             ]);
         }
 

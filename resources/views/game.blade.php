@@ -23,10 +23,12 @@
                                     <div class="container products mb-2">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div style="display: flex; align-items: center;">
-                                                @if($game->winner === null)
-                                                    <a href="/gameSetWinner/{{$game->id}}/{{$teamgame->getTeam->id}}">
-                                                        <button class="px-2 py-1 text-white bg-blue-500 mr-1">Vainqueur</button>
-                                                    </a>
+                                                @if(auth()->user()->isAbleTo('manageGame'))
+                                                    @if($game->winner === null)
+                                                        <a href="/gameSetWinner/{{$game->id}}/{{$teamgame->getTeam->id}}">
+                                                            <button class="px-2 py-1 text-white bg-blue-500 mr-1">Vainqueur</button>
+                                                        </a>
+                                                    @endif
                                                 @endif
                                                 <a href="/team/{{ $teamgame->getTeam->id }}">
                                                     <p>Equipe {{$key + 1}} : {{ $teamgame->getTeam->name}}</p>

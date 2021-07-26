@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('balance')->nullable();
             $table->integer('team_id')->nullable();
+            $table->boolean('team_accepted')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

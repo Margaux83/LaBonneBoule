@@ -70,6 +70,12 @@ Route::get('/addteam', function () {
 
 Route::post('/postTeam', [TeamController::class, 'save'])->middleware(['auth'])->name('postTeam');
 
+Route::get('/joinTeam/{team_id}', [TeamController::class, 'joinTeam'])->middleware(['auth'])->name('joinTeam');
+Route::get('/leaveTeam', [TeamController::class, 'leaveTeam'])->middleware(['auth'])->name('leaveTeam');
+
+Route::get('/acceptMember/{user_id}', [TeamController::class, 'acceptMember'])->middleware(['auth'])->name('acceptMember');
+Route::get('/fireMember/{user_id}', [TeamController::class, 'fireMember'])->middleware(['auth'])->name('fireMember');
+
 /**
  * ==============================================================
  * TOURNAMENT

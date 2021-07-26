@@ -9,9 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-12 lg:px-12">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <a href="{{ url('/addteam') }}">
-                        <button class="px-2 py-1 text-white bg-blue-500 mb-5">+ Créer une équipe</button>
-                    </a>
+                    @if(empty(auth()->user()->team_id))
+                        <a href="{{ url('/addteam') }}">
+                            <button class="px-2 py-1 text-white bg-blue-500 mb-5">+ Créer une équipe</button>
+                        </a>
+                    @else
+                        <a href="/team/{{auth()->user()->team_id}}">
+                            <button class="px-2 py-1 text-white bg-blue-500 mb-5">Mon équipe</button>
+                        </a>
+                    @endif
                     <ul class="mb-2">
                     @foreach($teams as $team)
                         <a href="/team/{{ $team->id }}">
