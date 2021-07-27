@@ -259,7 +259,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Boule SERVAL',
                 'image' => 'boule_lr_serval.png',
-                'description' => 'La boule SERVER est faite pour un style plus décontracté mais toujours précis. Recommandée pour les joueurs avisés.',
+                'description' => 'La boule SERVAL est faite pour un style plus décontracté mais toujours précis. Recommandée pour les joueurs avisés.',
                 'price' => 270
             ],
             [
