@@ -16,7 +16,7 @@
                                     Match {{$game->id}}
                                 </h4>
                                 @if($game->winner)
-                                    <p>Vainqueur : {{$game->getWinner->name}}</p>
+                                    <p>Vainqueur : {{$game->getWinner->name  ?? 'Equipe supprimée'}}</p>
                                 @endif
                                 <h5 class="mt-2">Equipes concernées :</h5>
                                 @foreach($teamgames as $key => $teamgame)
@@ -30,9 +30,13 @@
                                                         </a>
                                                     @endif
                                                 @endif
-                                                <a href="/team/{{ $teamgame->getTeam->id }}">
-                                                    <p>Equipe {{$key + 1}} : {{ $teamgame->getTeam->name}}</p>
-                                                </a>
+                                                @if($teamgame->getTeam->name  ?? null)
+                                                    <a href="/team/{{ $teamgame->getTeam->id }}">
+                                                        <p>Equipe {{$key + 1}} : {{ $teamgame->getTeam->name  ?? 'Equipe supprimée'}}</p>
+                                                    </a>
+                                                @else
+                                                    <p>Equipe {{$key + 1}} : {{ $teamgame->getTeam->name  ?? 'Equipe supprimée'}}</p>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

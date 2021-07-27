@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('balance')->nullable();
+            $table->integer('balance_needed')->nullable();
             $table->integer('team_id')->nullable();
             $table->boolean('team_accepted')->nullable();
             $table->rememberToken();

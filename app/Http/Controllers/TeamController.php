@@ -11,7 +11,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-        $teams = Team::paginate(20);
+        $teams = Team::where('is_deleted', '=', false)->paginate(10);
         return view('teams', ['teams' => $teams]);
     }
 
@@ -23,9 +23,16 @@ class TeamController extends Controller
 
         $team = new Team;
         $team->name = $request->name;
+        $team->creator = auth()->user()->id;
+        $team->is_deleted = false;
         $team->wins = 0;
         $team->loses = 0;
         $team->save();
+
+        $user = auth()->user();
+        $user->team_id = $team->id;
+        $user->team_accepted = true;
+        $user->save();
 
         return redirect('/teams')->with('status', 'Message posted');
     }
@@ -58,7 +65,8 @@ class TeamController extends Controller
             return redirect('/team/' . $team_id);
         }
 
-        $team->delete();
+        $team->is_deleted = true;
+        $team->save();
         return redirect('/teams');
     }
 

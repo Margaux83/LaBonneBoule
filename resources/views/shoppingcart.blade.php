@@ -60,9 +60,15 @@
                                 </tbody>
                             </table>
 
-                            <a href="/deleteCart">
-                                <button class="px-2 py-1 text-white bg-red-500 mt-5">Vider mon panier</button>
-                            </a>
+                            <div style="display: flex; justify-content: space-between;">
+                                <a href="/payCart/{{$shoppingcart->id}}">
+                                    <button class="px-10 py-3 text-white bg-blue-500 mt-5">Passer en caisse ({{$shoppingcart->total_price}} €)</button>
+                                </a>
+
+                                <a href="/deleteCart">
+                                    <button class="px-2 py-1 text-white bg-red-500 mt-5">Vider mon panier</button>
+                                </a>
+                            </div>
                         @else
                             <div class="mt-5">
                                 <p class="mb-5">Vous n'avez pas de boules... dans votre panier ! Vous trouverez à coup sûr les boules faites pour vous dans la boutique</p>

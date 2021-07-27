@@ -6,6 +6,7 @@ use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'dashboard']);
+Route::get('/', [DashboardController::class, 'dashboard'])->name('home');
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/balls', [BallController::class, 'index'])->name('balls');
@@ -103,6 +104,9 @@ Route::get('/deleteToCart/{ball_id}', [CartController::class, 'deleteToCart'])->
 
 Route::get('/deleteCart', [CartController::class, 'deleteCart'])->middleware(['auth'])->name('deleteCart');
 
+
+Route::get('/payCart/{shoppingcart_id}', [CartController::class, 'payCart'])->middleware(['auth'])->name('payCart');
+Route::get('/addUserBalance/{shoppingcart_id}', [UserController::class, 'addUserBalance'])->middleware(['auth'])->name('addUserBalance');
 
 /*
 Route::post('cart', [CartController::class, 'addToCart'])->middleware(['auth'])->name('cart.store');

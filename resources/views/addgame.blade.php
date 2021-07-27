@@ -28,6 +28,12 @@
                     {!! Form::select('tournament_id', $tournaments, null, ['placeholder' => 'Sélectionnez un tournoi', 'required' => true]); !!}   <br>
 
 
+                    @error('tournament_round')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    {!! Form::label('tournament_round', 'Round :'); !!}   <br>
+                    {!! Form::number('tournament_round', 1, ['required']) !!}   <br>
+
                     {!! Form::submit('Créer le match'); !!}
                     {!! Form::close() !!}
                 </div>
