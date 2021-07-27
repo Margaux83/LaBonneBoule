@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Teamgame;
 use App\Models\Tournament;
+use App\Models\User;
 use App\Models\Team;
+use App\Models\Inventory;
+use App\Models\Cup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -127,6 +130,22 @@ class GameController extends Controller
             $tournament = Tournament::find($tournament_id);
             $tournament->winner = $gameWinners[0];
             $tournament->save();
+            
+            $cups = Cup::where('tournament_id', '=', $tournament_id)->get();
+
+            foreach ($cups as $key => $cup) {
+                $cup->team_id = $gameWinners[0];
+                $cup->save();
+            }
+
+            $users = User::where('team_id', '=', $gameWinners[0])->where('team_accepted', '=', true)->get();
+
+            foreach ($users as $key => $user) {
+                $inventoryCup = new Inventory;
+                $inventoryCup->user_id = $user->id;
+                $inventoryCup->cup_id = $cup->id;
+                $inventoryCup->save();
+            }
         }else {
             for ($i = 0; $i < count($gameWinners); $i += 2) {
                 if (($i + 1) <= count($gameWinners)) {

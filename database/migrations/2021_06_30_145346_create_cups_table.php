@@ -16,7 +16,8 @@ class CreateCupsTable extends Migration
         Schema::create('cups', function (Blueprint $table) {
             $table->id();
             $table->integer('tournament_id');
-            $table->integer('team_id');
+            $table->integer('team_id')->nullable();
+            $table->text('image');
             $table->timestamps();
         });
     }
