@@ -23,9 +23,43 @@
                                 <button class="px-2 py-1 text-white bg-blue-500">Créer un compte</button>
                             </a>
                         </div>
+
+                    @else
+                        <a href="/balls">
+                            <button class="px-2 py-1 text-white bg-blue-500 mb-5">Voir les boules de pétanque</a>
+                        </button>
                     @endif
 
-                    <button><a href="{{ url('/balls') }}">Voir les boules de pétanque</a></button>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <div class="card-body">
+                                <h1>{{ $chart1->options['chart_title'] }}</h1>
+                                {!! $chart1->renderHtml() !!}
+                                {!! $chart1->renderChartJsLibrary() !!}
+                                {!! $chart1->renderJs() !!}
+                            </div>
+                            <div class="card-body">
+                                <h1>{{ $chart3->options['chart_title'] }}</h1>
+                                {!! $chart3->renderHtml() !!}
+                                {!! $chart3->renderChartJsLibrary() !!}
+                                {!! $chart3->renderJs() !!}
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h1>{{ $chart2->options['chart_title'] }}</h1>
+                            {!! $chart2->renderHtml() !!}
+                            {!! $chart2->renderChartJsLibrary() !!}
+                            {!! $chart2->renderJs() !!}
+                        </div>
+
+                        <div class="card-body">
+                            <h1>{{ $chart4->options['chart_title'] }}</h1>
+                            {!! $chart4->renderHtml() !!}
+                            {!! $chart4->renderChartJsLibrary() !!}
+                            {!! $chart4->renderJs() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
