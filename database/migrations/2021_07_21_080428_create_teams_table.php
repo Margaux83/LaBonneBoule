@@ -19,6 +19,7 @@ class CreateTeamsTable extends Migration
             $table->integer('wins');
             $table->integer('loses');
             $table->integer('creator');
+            $table->boolean('is_deleted');
             $table->timestamps();
         });
     }

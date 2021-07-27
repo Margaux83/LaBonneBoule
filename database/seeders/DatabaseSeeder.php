@@ -110,9 +110,8 @@ class DatabaseSeeder extends Seeder
         }
 
         $tournaments = ['Premier Tournoi', "Tournoi de l'été", "Tournoi départemental", "Tournoi national", 'Tournoi mondial'];
-        foreach ($tournaments as $key => $tournament) {
-            
-        }
+        $tournamentsStart = [new \DateTime('2021-06-19'), new \DateTime('2021-06-25'), new \DateTime('2021-07-28'), new \DateTime('2021-08-12'), new \DateTime('2021-10-01')];
+        $tournamentsEnd = [new \DateTime('2021-06-19'), new \DateTime('2021-07-15'), new \DateTime('2021-07-30'), new \DateTime('2021-08-16'), new \DateTime('2021-10-09')];
 
         $teams = ['LesFifousDeLeNight' => 1, 'BcpTropSrx' => 2, 'TryHarderDeLXTrem' => 3, 'OkOk' => 4];
 
@@ -195,8 +194,8 @@ class DatabaseSeeder extends Seeder
 
             DB::table('tournaments')->insert([
                 'name' => $tournament,
-                'date_start' => new \DateTime(),
-                'date_end' => new \DateTime(),
+                'date_start' => $tournamentsStart[$keyTournament],
+                'date_end' => $tournamentsEnd[$keyTournament],
                 'winner' => $winnerTournament
             ]);
         }
@@ -206,7 +205,8 @@ class DatabaseSeeder extends Seeder
                 'name' => $key,
                 'wins' => $teamsResults[$value]['wins'],
                 'loses' => $teamsResults[$value]['loses'],
-                'creator' => $value
+                'creator' => $value,
+                'is_deleted' => false
             ]);
         }
 

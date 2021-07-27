@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Shoppingcart;
 use App\Models\Shoppingcartball;
 use App\Models\User;
+use App\Models\Inventory;
+use App\Models\Cashier\User as CashierUser;
+use Laravel\Cashier\Cashier;
 
 class CartController extends Controller
 {
@@ -18,6 +21,13 @@ class CartController extends Controller
         $shoppingElements = [];
         if (count($shoppingCart)) {
             $shoppingElementsFounded = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCart[0]->id)->get();
+
+            $totalPrice = 0;
+            foreach ($shoppingElementsFounded as $key => $shoppingCartBall) {
+                $totalPrice += $shoppingCartBall->getBall->price;
+            }
+            $shoppingCart[0]->total_price = $totalPrice;
+            $shoppingCart[0]->save();
         };
 
         foreach ($shoppingElementsFounded as $key => $shoppingElementFounded) {
@@ -26,9 +36,9 @@ class CartController extends Controller
                 'count' => Shoppingcartball::where('ball_id', '=', $shoppingElementFounded->ball_id)->count()
             ];
         }
-
         return view('shoppingcart', [
-            'shoppingElements' => $shoppingElements
+            'shoppingElements' => $shoppingElements,
+            'shoppingcart' => $shoppingCart[0]
         ]);
     }
 
@@ -124,6 +134,41 @@ class CartController extends Controller
         }
            
         return redirect()->route('shoppingcart'); 
+    }
+
+    public function payCart(Request $request)
+    {
+        $shoppingcart_id = $request->shoppingcart_id;
+        $shoppingCart = Shoppingcart::find($shoppingcart_id);
+
+        $user = auth()->user();
+        $newBalance = $user->balance - $shoppingCart->total_price;
+
+        if ($newBalance >= 0) {
+            $shoppingCartBalls = Shoppingcartball::where('shoppingcart_id', '=', $shoppingCart->id)->get();
+
+            foreach ($shoppingCartBalls as $key => $shoppingCartBall) {
+                $ballBought = new Inventory;
+                $ballBought->user_id = $user->id;
+                $ballBought->ball_id = $shoppingCartBall->ball_id;
+                $ballBought->save();
+
+                $shoppingCartBall->delete();
+            }
+
+            $user->balance = $newBalance;
+            $user->save();
+
+            return redirect()->route('inventory'); 
+        }else {
+            $user->balance_needed = abs($newBalance);
+            $user->save();
+
+            return view('addmoney', [
+                'balance' => abs($newBalance),
+                'shoppingcart' => $shoppingCart
+            ]);
+        }
     }
 
     /*

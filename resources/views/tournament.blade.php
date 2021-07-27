@@ -16,7 +16,7 @@
                                     {{$tournament->name}}
                                 </h4>
                                 @if($tournament->winner !== null)
-                                    <p>Vainqueur : {{$tournament->getWinner->name}}</p>
+                                    <p>Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
                                 @endif
                                 <p>
                                     Date de début : {{$tournament->date_start}} 
@@ -37,7 +37,7 @@
                                                     <li class="container products" style="padding: 10px; border: 1px solid lightgrey;">
                                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                                             <div style="display: flex; justify-content: space-between;">
-                                                                Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name}}@endif
+                                                                Match {{ $game->id }} @if($game->winner) - Vainqueur : {{$game->getWinner->name  ?? 'Equipe supprimée'}}@endif
                                                             </div>
                                                         </div>
                                                     </li>

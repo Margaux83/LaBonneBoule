@@ -12,7 +12,7 @@ class TournamentController extends Controller
 {
     public function index()
     {
-        $tournaments = Tournament::paginate(20);
+        $tournaments = Tournament::paginate(10);
         return view('tournaments', ['tournaments' => $tournaments]);
     }
 
@@ -23,6 +23,8 @@ class TournamentController extends Controller
             'date_start' => 'required' ,
             'date_end' => 'required' 
         ]);
+
+        if ($request->date_start > $request->date_end) return redirect('/addtournament')->with('status', 'Dates are incoherents');
 
         $tournament = new Tournament;
         $tournament->name = $request->name;

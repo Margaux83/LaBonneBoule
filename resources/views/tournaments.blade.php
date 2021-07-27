@@ -22,7 +22,7 @@
                                     <div style="display: flex;">
                                         <p style="flex: 1;">{{$tournament->name}}
                                         @if($tournament->winner !== null)
-                                             - Vainqueur : {{$tournament->getWinner->name}}</p>
+                                             - Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
                                         @else
                                             </p>
                                         @endif

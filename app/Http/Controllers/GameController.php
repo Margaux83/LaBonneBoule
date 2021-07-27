@@ -14,7 +14,7 @@ class GameController extends Controller
 {
     public function index()
     {
-        $games = Game::paginate(20);
+        $games = Game::paginate(10);
         return view('games', ['games' => $games]);
     }
 
@@ -33,12 +33,14 @@ class GameController extends Controller
     {
         $validated = $request->validate([
             'tournament_id' => 'required',
+            'tournament_round' => 'required|numeric|min:1',
             'team1' => 'required',
             'team2' => 'required'
         ]);
 
         $game = new Game;
         $game->tournament_id = $request->tournament_id;
+        $game->tournament_round = $request->tournament_round;
         $game->save();
 
         if ($request->team1 === $request->team2) {
