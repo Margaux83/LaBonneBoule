@@ -12,18 +12,25 @@
                     <div class="container products">
                         <div class="row">
                             <div class="col-xs-18 col-sm-6 col-md-3">
-                                <h4 style="font-weight: bold; font-size: 20px;">
-                                    {{$tournament->name}}
-                                </h4>
-                                @if($tournament->winner !== null)
-                                    <p>Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
-                                @endif
-                                <p>
-                                    Date de début : {{$tournament->date_start}} 
-                                </p>
-                                <p>
-                                    Date de fin : {{$tournament->date_end}} 
-                                </p>
+                                <div style="display: flex;">
+                                    <img src='{{ asset('storage/images/cups/' . $cup->image) }}' alt="" style="height: 100px; width: auto;">
+                                    <div>
+                                        <h4 style="font-weight: bold; font-size: 20px;">
+                                            {{$tournament->name}}
+                                        </h4>
+                                        @if($tournament->winner !== null)
+                                            <a href="/team/{{$tournament->winner}}">
+                                                <p>Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
+                                            </a>
+                                        @endif
+                                        <p>
+                                            Date de début : {{$tournament->date_start}} 
+                                        </p>
+                                        <p>
+                                            Date de fin : {{$tournament->date_end}} 
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mt-5">

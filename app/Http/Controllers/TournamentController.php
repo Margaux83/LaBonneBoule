@@ -7,13 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Game;
 use App\Models\Teamgame;
+use App\Models\Cup;
 
 class TournamentController extends Controller
 {
     public function index()
     {
         $tournaments = Tournament::paginate(10);
-        return view('tournaments', ['tournaments' => $tournaments]);
+        $cups = Cup::all();
+        return view('tournaments', [
+            'tournaments' => $tournaments,
+            'cups' => $cups
+        ]);
     }
 
     public function save(Request $request)
@@ -32,16 +37,19 @@ class TournamentController extends Controller
         $tournament->date_end = $request->date_end;
         $tournament->save();
 
+        $cup = new Cup;
+        $cup->tournament_id = $tournament->id;
+        $cup->image = ($request->cup_style . '.png');
+        $cup->save();
+
         return redirect('/tournaments')->with('status', 'Message posted');
     }
 
     public function tournament(Request $request) {
         $tournament_id = $request->tournament_id;
-        return $this->tournamentFromId($tournament_id);
-    }
-
-    public function tournamentFromId($tournament_id)
-    {
+        $cup = Cup::where('tournament_id', '=', $tournament_id)->get();
+        if (count($cup)) $cup = $cup[0];
+        
         $tournament = Tournament::find($tournament_id);
 
         $games = Game::where('tournament_id', '=', $tournament_id)->get();
@@ -56,7 +64,8 @@ class TournamentController extends Controller
         return view('tournament', [
             'tournament' => $tournament,
             'tournamentMaxRound' => $tournamentMaxRound,
-            'games' => $games
+            'games' => $games,
+            'cup' => $cup
         ]);
     }
 

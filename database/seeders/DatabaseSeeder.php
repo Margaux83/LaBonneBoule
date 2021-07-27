@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Date;
 use App\Models\Role;
+use App\Models\Inventory;
+use App\Models\Cup;
+use App\Models\Team;
 use App\Models\Permission;
 use App\Models\User;
 
@@ -109,11 +112,12 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $cupsImages = ['coupe_gold.png', 'coupe_silver.png', 'coupe_bronze.png'];
         $tournaments = ['Premier Tournoi', "Tournoi de l'été", "Tournoi départemental", "Tournoi national", 'Tournoi mondial'];
         $tournamentsStart = [new \DateTime('2021-06-19'), new \DateTime('2021-06-25'), new \DateTime('2021-07-28'), new \DateTime('2021-08-12'), new \DateTime('2021-10-01')];
         $tournamentsEnd = [new \DateTime('2021-06-19'), new \DateTime('2021-07-15'), new \DateTime('2021-07-30'), new \DateTime('2021-08-16'), new \DateTime('2021-10-09')];
 
-        $teams = ['LesFifousDeLeNight' => 1, 'BcpTropSrx' => 2, 'TryHarderDeLXTrem' => 3, 'OkOk' => 4];
+        $teams = ['Les Fifous De La Night' => 1, 'Les Boulistes En Folie' => 2, 'Tir Ou Pointe' => 3, 'Ok Ok' => 4];
 
         $teamsResults = [
             1 => [
@@ -198,6 +202,12 @@ class DatabaseSeeder extends Seeder
                 'date_end' => $tournamentsEnd[$keyTournament],
                 'winner' => $winnerTournament
             ]);
+
+            DB::table('cups')->insert([
+                'tournament_id' => ($keyTournament + 1),
+                'team_id' => $winnerTournament,
+                'image' => $cupsImages[random_int(0, 2)]
+            ]);
         }
 
         foreach ($teams as $key => $value) {
@@ -210,108 +220,119 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $cups = Cup::where('team_id', '!=', null)->get();
+        foreach ($cups as $key => $cup) {
+            $users = User::where('team_id', '=', $cup->team_id)->where('team_accepted', '=', true)->get();
+            foreach ($users as $key => $user) {
+                DB::table('inventories')->insert([
+                    'user_id' => $user->id,
+                    'cup_id' => $cup->id,
+                ]);
+            }
+        }
+
         $balls = [
             [
                 'name' => 'Boule COAT',
                 'image' => 'boule_lr_coat.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule COAT permet une précision et une gestion du tir parfait. Recommandée pour les joueurs avisés.',
+                'price' => 320
             ],
             [
                 'name' => 'Boule HENNOU',
                 'image' => 'boule_lr_hennou.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule HENNOU a du caractère et permet de mener le jeu de façon poignante. Recommandée pour les joueurs avisés.',
+                'price' => 330
             ],
             [
                 'name' => 'Boule SKRZYPCZYK',
                 'image' => 'boule_lr_yves.png',
-                'description' => '',
+                'description' => 'La boule SKRZYPCZYK permet d\'entrer avec performance dans la partie. Recommandée pour les joueurs avisés.',
                 'price' => 270
             ],
             [
                 'name' => 'Boule VAUCELLE',
                 'image' => 'boule_lr_vaucelle.png',
-                'description' => '',
+                'description' => 'La boule VAUCELLE est précise et permet de mettre des effets de rotation. Recommandée pour les joueurs avisés.',
                 'price' => 270
             ],
             [
                 'name' => 'Boule SERVAL',
                 'image' => 'boule_lr_serval.png',
-                'description' => '',
+                'description' => 'La boule SERVER est faite pour un style plus décontracté mais toujours précis. Recommandée pour les joueurs avisés.',
                 'price' => 270
             ],
             [
                 'name' => 'Boule ETCHEBEST',
                 'image' => 'boule_epique_etchebest.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule ETCHEBEST est faite pour la puissance. Elle influence le jeu par une forte présence.',
+                'price' => 190
             ],
             [
                 'name' => 'Boule LA BOULE',
                 'image' => 'boule_epique_laboule.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule LA BOULE est menaçante. Elle rappellera à vos adversaire que vous êtes là pour gagner.',
+                'price' => 180
             ],
             [
                 'name' => 'Boule THANOS',
                 'image' => 'boule_epique_thanos.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule THANOS permet d\'éparpiller les boules adverses par sa puissance.',
+                'price' => 210
             ],
             [
                 'name' => 'Boule ZIZOU',
                 'image' => 'boule_epique_zizou.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule ZIZOU est précise, d\'une puissance plus que correcte. Frappez juste avec cette dernière.',
+                'price' => 195
             ],
             [
                 'name' => 'Boule Gold Match',
                 'image' => 'boule_gold_match.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule Gold Match est faite pour les effets.',
+                'price' => 110
             ],
             [
                 'name' => 'Boule Gold Obut',
                 'image' => 'boule_gold_obut.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Gold Obut est faite pour rouler avec précision après le tir.',
+                'price' => 140
             ],
             [
                 'name' => 'Boule Gold Obut',
                 'image' => 'boule_gold_obut_1.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Gold Obut est faite pour rouler après un long tir.',
+                'price' => 140
             ],
             [
                 'name' => 'Boule Gold Obut',
                 'image' => 'boule_gold_obut_2.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Gold Obut est faite pour frapper fort les boules adverses.',
+                'price' => 125
             ],
             [
                 'name' => 'Boule Match',
                 'image' => 'boule_normal_match.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'La boule Match est faite pour les effets.',
+                'price' => 60
             ],
             [
                 'name' => 'Boule Obut',
                 'image' => 'boule_normal_obut.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Obut est faite pour rouler avec précision après le tir.',
+                'price' => 75
             ],
             [
                 'name' => 'Boule Obut',
                 'image' => 'boule_normal_obut_1.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Obut est faite pour rouler après un long tir.',
+                'price' => 75
             ],
             [
                 'name' => 'Boule Obut',
                 'image' => 'boule_normal_obut_2.png',
-                'description' => '',
-                'price' => 270
+                'description' => 'Cette boule Obut est faite pour frapper fort les boules adverses.',
+                'price' => 70
             ],
         ];
 

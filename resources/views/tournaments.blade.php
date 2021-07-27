@@ -19,14 +19,21 @@
                         <a href="/tournament/{{ $tournament->id }}">
                             <li class="container products" style="padding: 10px; border: 1px solid lightgrey;">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div style="display: flex;">
-                                        <p style="flex: 1;">{{$tournament->name}}
-                                        @if($tournament->winner !== null)
-                                             - Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
-                                        @else
-                                            </p>
-                                        @endif
-                                        <p>{{$tournament->date_start}}</p>
+                                    <div style="display: flex; align-items: center;">
+                                        @foreach($cups as $cup)
+                                            @if($cup->tournament_id === $tournament->id)
+                                                <img src='{{ asset('storage/images/cups/' . $cup->image) }}' alt="" style="height: 40px; width: auto;">
+                                            @endif
+                                        @endforeach
+                                        <div style="display: flex; flex: 1;">
+                                            <p style="flex: 1;">{{$tournament->name}}
+                                            @if($tournament->winner !== null)
+                                                - Vainqueur : {{$tournament->getWinner->name ?? 'Equipe supprimée'}}</p>
+                                            @else
+                                                </p>
+                                            @endif
+                                            <p>{{$tournament->date_start}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

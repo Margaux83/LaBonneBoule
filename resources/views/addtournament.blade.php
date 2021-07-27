@@ -16,6 +16,18 @@
                     @enderror
                     {!! Form::label('name', 'Nom :'); !!}   <br>
                     {!! Form::text('name',null, ['required']) !!}   <br>
+
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                    {!! Form::label('cup_style', 'Style de la coupe :'); !!}   <br>
+                    {!! Form::select('cup_style', 
+                        [
+                            'coupe_gold' => 'Or',
+                            'coupe_silver' => 'Silver',
+                            'coupe_bronze' => 'Bronze',
+                        ] 
+                        ,null, ['placeholder' => 'Sélectionnez un style de coupe', 'required' => true]) !!}   <br>
                     
                     @error('date_start')
                         <div class="alert alert-danger">{{ $message }}</div>

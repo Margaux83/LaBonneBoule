@@ -21,14 +21,14 @@
                     </x-nav-link> 
                     
                     @if(auth()->user())
-                        <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
-                            {{ __('Matchs') }}
-                        </x-nav-link>
                         <x-nav-link :href="route('teams')" :active="request()->routeIs('teams')">
                             {{ __('Equipes') }}
                         </x-nav-link>
                         <x-nav-link :href="route('tournaments')" :active="request()->routeIs('tournaments')">
                             {{ __('Tournois') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('games')" :active="request()->routeIs('games')">
+                            {{ __('Matchs') }}
                         </x-nav-link>
                         <x-nav-link :href="route('balls')" :active="request()->routeIs('balls')">
                             {{ __('Boules de pétanque') }}
