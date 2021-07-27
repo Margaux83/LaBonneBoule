@@ -30,21 +30,23 @@ class DashboardController extends Controller
 
         $chart2_options = [
             'chart_title' => 'Victoires par équipe',
-            'report_type' => 'group_by_string',
+            'report_type' => 'group_by_relationship',
             'model' => 'App\Models\Game',
-            'group_by_field' => 'winner',
+            'group_by_field' => 'name',
             'chart_type' => 'pie',
-            'relationship_name' => 'getWinner()->name',
+            'relationship_name' => 'getWinner',
+            'where_raw' => 'winner IS NOT NULL'
         ];
         $chart2 = new LaravelChart($chart2_options);
 
         $chart4_options = [
             'chart_title' => 'Victoires de tournois par équipe',
-            'report_type' => 'group_by_string',
+            'report_type' => 'group_by_relationship',
             'model' => 'App\Models\Tournament',
-            'group_by_field' => 'winner',
+            'group_by_field' => 'name',
             'chart_type' => 'pie',
-            'relationship_name' => 'getWinner()->name',
+            'relationship_name' => 'getWinner',
+            'where_raw' => 'winner IS NOT NULL'
         ];
         $chart4 = new LaravelChart($chart4_options);
 
