@@ -17,6 +17,9 @@ class CreateBallsTable extends Migration
             $table->id();
             $table->string('name', 255);
             $table->text('image');
+            $table->text('description')->nullable(true);
+            $table->float('price');
+            $table->integer('isdeleted')->default(0);
             $table->timestamps();
         });
     }

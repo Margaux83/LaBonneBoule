@@ -16,6 +16,7 @@ class CreateShoppingcartsTable extends Migration
         Schema::create('shoppingcarts', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->float('total_price')->nullable();
             $table->timestamps();
         });
     }
